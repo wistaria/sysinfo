@@ -10,13 +10,16 @@ if [ -f /proc/cpuinfo ]; then
   N_CPUS=$(grep physical.id /proc/cpuinfo | sort -u | wc -l)
   N_PHYS_CORES=$(grep cpu.cores /proc/cpuinfo | sort -u | awk '{print $4}')
   N_LOG_CORES=$(grep processor /proc/cpuinfo | wc -l)
-  MEMORY=$(grep 'MemTotal' /proc/meminfo)
   if [ $(expr ${N_CPUS} '*' ${N_PHYS_CORES}) = ${N_LOG_CORES} ]; then
     HYPER_THREAD=0
   else
     HYPER_THREAD=1
   fi
   BOGOMIPS=$(grep 'bogomips' /proc/cpuinfo | tail -1 | awk '{print $3}')
+  MEMORY=$(free -g | awk '/^Mem:/ {print $2}')
+  N_GPUS=$(nvidia-smi -L | grep 'GPU' | wc -l)
+  MODEL_GPUS=$(nvidia-smi -L | grep GPU | head -1 | awk '{  for (i = 3; i <= NF-2; i++) { printf "%s%s", $i, (i < NF-2 ? OFS : ORS) }}')
+  echo "Hostname: $(hostname -s)"
   echo "OS: ${OS}"
   echo "Model: ${MODEL}"
   echo "Total Number of CPUs: ${N_CPUS}"
@@ -24,4 +27,7 @@ if [ -f /proc/cpuinfo ]; then
   echo "Total Number of Logical Cores: ${N_LOG_CORES}"
   echo "Hyper Threading: ${HYPER_THREAD}"
   echo "BogoMIPS: ${BOGOMIPS}"
+  echo "Total Memory (GB): ${MEMORY}"
+  echo "Number of GPUs: ${N_GPUS}"
+  echo "MODEL of GPUs: ${MODEL_GPUS}"
 fi
