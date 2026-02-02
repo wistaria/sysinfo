@@ -38,7 +38,7 @@ if [ -f /proc/cpuinfo ]; then
   N_CPUS=$(grep physical.id /proc/cpuinfo | sort -u | wc -l)
   N_PHYS_CORES=$(grep cpu.cores /proc/cpuinfo | sort -u | awk '{print $4}')
   N_LOG_CORES=$(grep -c processor /proc/cpuinfo)
-  if [ $(("${N_CPUS}" * "${N_PHYS_CORES}")) -eq "${N_LOG_CORES}" ]; then
+  if [ $((${N_CPUS} * ${N_PHYS_CORES})) -eq "${N_LOG_CORES}" ]; then
     HYPER_THREAD=0
   else
     HYPER_THREAD=1
