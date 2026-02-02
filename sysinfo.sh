@@ -82,7 +82,7 @@ elif [ "$(uname -s 2>/dev/null)" = "Darwin" ] && command -v system_profiler >/de
 fi
 
 if [ $FLAG_TABLE -eq 1 ]; then
-  printf "| %s | %s | %s | %d | %d | %d | %d | %s | %d | %d | %s |\n" "${HOSTNAME}" "${OS}" "${MODEL}" "${N_CPUS}" "${N_PHYS_CORES}" "${N_LOG_CORES}" "${HYPER_THREAD}" "${BOGOMIPS}" "${MEMORY}" "${MODEL_GPUS}" "${N_GPUS}" 
+  printf "| %s | %s | %s | %d | %d | %d | %d | %s | %d | %s | %d |\n" "${HOSTNAME}" "${OS}" "${MODEL}" "${N_CPUS}" "${N_PHYS_CORES}" "${N_LOG_CORES}" "${HYPER_THREAD}" "${BOGOMIPS}" "${MEMORY}" "${MODEL_GPUS}" "${N_GPUS}" 
 else
   printf "%-32s : %s\n" "Hostname" "${HOSTNAME}"
   printf "%-32s : %s\n" "OS" "${OS}"
